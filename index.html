@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>David · Temporada 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#0F1828; --surface:#172338; --surface-2:#1F2D47; --line:#2B3B59;
+  --fg:#F3F0E8; --muted:#A3AEC2;
+  --label:#F2C14E; --pitch:#3DB27A; --brush:#E86A50; --ink-on-label:#1A1406;
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){
+  --bg:#ECEFF4; --surface:#FFFFFF; --surface-2:#F4F6FA; --line:#D3D9E4;
+  --fg:#141C2B; --muted:#5A6577; --label:#E0A91F; --pitch:#21865A; --brush:#D2533A;
+  color-scheme:light } }
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55;
+  padding-top:calc(24px + env(safe-area-inset-top,0px));padding-bottom:calc(120px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:40px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--label);outline-offset:3px;border-radius:6px}
+
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 32px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,6.4vw,72px);line-height:.95;margin:6px 0 0;letter-spacing:-.02em}
+h1 .yr{color:var(--label)}
+.who{max-width:46ch;color:var(--muted);margin:0}
+.who b{color:var(--fg);font-weight:700}
+
+.stage{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:900px){.stage{grid-template-columns:1fr}}
+.now{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:grid;gap:20px;min-width:0}
+.head{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:22px 60px;align-items:center}
+@media (max-width:560px){.head{grid-template-columns:1fr}}
+.cover-box{position:relative;aspect-ratio:1/1;width:100%;max-width:200px}
+.vinyl{position:absolute;top:4%;left:22%;width:92%;aspect-ratio:1/1;border-radius:50%;
+  background:repeating-radial-gradient(circle at 50% 50%,#111 0 2px,#1c1c1c 2px 4px);display:grid;place-items:center;transition:left .6s cubic-bezier(.2,.8,.2,1)}
+.vinyl .lbl{width:34%;aspect-ratio:1/1;border-radius:50%;background:var(--label);color:var(--ink-on-label);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:16px}
+.playing .vinyl{animation:spin 3.2s linear infinite;left:30%}
+@keyframes spin{to{transform:rotate(360deg)}}
+canvas.cover{position:relative;width:78%;aspect-ratio:1/1;border-radius:6px;display:block}
+.meta{display:grid;gap:6px;min-width:0}
+.side-tag{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--label)}
+.meta h2{font-family:var(--f-display);font-weight:600;font-size:clamp(22px,3vw,30px);line-height:1.1;margin:0}
+.meta .sub{color:var(--muted);margin:0}
+.chip{display:inline-block;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px dashed var(--muted);color:var(--muted);vertical-align:middle;margin-left:6px;white-space:nowrap}
+.chip.borrador{border-style:solid;border-color:var(--brush);color:var(--brush)}
+.chip.real{border-style:solid;border-color:var(--pitch);color:var(--pitch)}
+.chip.single{border:0;background:var(--label);color:var(--ink-on-label)}
+
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;margin:0;padding:14px 16px;background:var(--surface-2);border-radius:14px}
+@media (max-width:560px){.facts{grid-template-columns:1fr}}
+.facts div{min-width:0}
+.facts dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:0}
+
+.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px}
+@media (max-width:560px){.notes{grid-template-columns:1fr}}
+.note{min-width:0}
+.note.full{grid-column:1/-1}
+.note h3{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 4px;font-weight:600}
+.note p,.note ol{margin:0}
+.note ol{padding-left:20px;display:grid;gap:4px}
+.todo{color:var(--brush);font-style:italic}
+blockquote.chorus{margin:0;padding:14px 18px;border-left:4px solid var(--label);background:var(--surface-2);border-radius:0 12px 12px 0;font-family:var(--f-display);font-weight:400;font-size:clamp(16px,2vw,20px);line-height:1.35}
+blockquote.chorus small{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+
+.match{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.stat{padding:12px 14px;display:grid;gap:2px;background:var(--surface-2)}
+.stat + .stat{border-left:1px solid var(--line)}
+.stat .n{font-family:var(--f-display);font-weight:800;font-size:28px;color:var(--pitch);font-variant-numeric:tabular-nums;line-height:1}
+.stat .k{font-size:12px;color:var(--muted);line-height:1.3}
+.stat .k b{color:var(--fg);font-weight:700;display:block}
+
+.list{display:grid;gap:18px;min-width:0}
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.filters button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:4px 12px;font-size:13px;color:var(--muted)}
+.filters button[aria-pressed="true"]{background:var(--label);border-color:var(--label);color:var(--ink-on-label);font-weight:700}
+.side h3{font-family:var(--f-display);font-weight:600;font-size:15px;margin:0 0 8px;display:flex;gap:10px;align-items:baseline}
+.side h3 span{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400}
+ol.tracks{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.track{width:100%;display:grid;grid-template-columns:28px 48px minmax(0,1fr) auto;gap:12px;align-items:center;text-align:left;background:transparent;border:1px solid transparent;border-radius:12px;padding:8px 10px}
+.track:hover{background:var(--surface)}
+.track[aria-current="true"]{background:var(--surface);border-color:var(--line)}
+.track .no{font-family:var(--f-mono);font-size:13px;color:var(--muted);text-align:right}
+.track[aria-current="true"] .no{color:var(--label)}
+.track canvas{width:48px;height:48px;border-radius:4px;display:block}
+.track .t{min-width:0}
+.track .t b{display:block;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track .t small{color:var(--muted);font-size:13px}
+.track .d{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-align:right;white-space:nowrap}
+.eq{display:none;gap:2px;align-items:flex-end;height:14px;justify-content:flex-end}
+.eq i{width:3px;background:var(--label);animation:eq .9s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:.2s}.eq i:nth-child(3){animation-delay:.4s}
+@keyframes eq{0%,100%{height:4px}50%{height:14px}}
+.playing .track[aria-current="true"] .eq{display:flex}
+.playing .track[aria-current="true"] .no-n{display:none}
+li[hidden]{display:none}
+
+.board{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px}
+@media (max-width:900px){.board{grid-template-columns:1fr}}
+.score{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:grid;gap:16px}
+.score h2,.credits h2{font-family:var(--f-display);font-weight:600;font-size:20px;margin:0}
+.totals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.totals{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.total{background:var(--surface-2);border-radius:14px;padding:14px;display:grid;gap:2px}
+.total .n{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1}
+.total .k{font-size:12px;color:var(--muted)}
+.split{display:grid;gap:6px}
+.split h4{margin:0;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.bar{display:flex;height:12px;border-radius:999px;overflow:hidden;background:var(--surface-2)}
+.bar .a{background:var(--label)} .bar .b{background:var(--pitch)} .bar .c{background:var(--brush)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.credits{display:grid;gap:12px;align-content:start;padding:22px 4px}
+.credits dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px}
+.credits dt{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+.credits dd{margin:0}
+.fine{font-size:13px;color:var(--muted);margin:0}
+
+.player{position:fixed;left:0;right:0;bottom:0;z-index:20;background:color-mix(in srgb,var(--surface) 94%,transparent);border-top:1px solid var(--line);
+  padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.player .in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:16px;align-items:center}
+.pl-now{min-width:0;display:flex;gap:10px;align-items:center}
+.pl-now canvas{width:40px;height:40px;border-radius:4px;flex:none}
+.pl-now div{min-width:0}
+.pl-now b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
+.pl-now small{color:var(--muted);font-size:12px}
+.ctrls{display:flex;gap:6px;align-items:center}
+.ctrls button{background:transparent;border:0;width:40px;height:40px;border-radius:50%;display:grid;place-items:center}
+.ctrls button:hover{background:var(--surface-2)}
+.ctrls .play{background:var(--label);color:var(--ink-on-label);width:48px;height:48px}
+.ctrls svg{width:20px;height:20px;fill:currentColor}
+.ctrls .play:hover{background:var(--label);filter:brightness(1.08)}
+.side,.track{color:var(--fg)}
+.prog{display:flex;align-items:center;gap:10px;justify-content:flex-end;min-width:0}
+.prog .time{font-family:var(--f-mono);font-size:12px;color:var(--muted);white-space:nowrap}
+.prog .rail{flex:1;max-width:260px;height:4px;background:var(--line);border-radius:999px;overflow:hidden}
+.prog .fill{height:100%;width:0;background:var(--label)}
+.keys{font-family:var(--f-mono);font-size:11px;color:var(--muted);white-space:nowrap}
+.keys kbd{border:1px solid var(--line);border-radius:4px;padding:0 4px;font-family:inherit}
+@media (max-width:700px){.player .in{grid-template-columns:minmax(0,1fr) auto}.prog{display:none}}
+@media (prefers-reduced-motion: reduce){.playing .vinyl{animation:none}.eq i{animation:none;height:10px}.vinyl{transition:none}}
+.note ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.note ol li::marker{color:var(--label);font-weight:700}
+.match[hidden],.facts[hidden],.notes[hidden],.side-tag[hidden]{display:none}
+</style></head><body>
+
+<div class="wrap" id="app">
+  <header class="top">
+    <div>
+      <h1>David<br>Temporada <span class="yr">2026</span></h1>
+    </div>
+    <p class="who">Un disco de <b>David Guerra</b>.<br>UX Research · Design Ops<br>Casi todo suena en la <b>App</b>.</p>
+  </header>
+
+  <section class="stage" aria-label="Proyecto sonando">
+    <article class="now" id="now" aria-live="polite">
+      <div class="head">
+        <div class="cover-box">
+          <div class="vinyl" aria-hidden="true"><div class="lbl" id="vLabel">01</div></div>
+          <canvas class="cover" id="bigCover" width="600" height="600" role="img" aria-label="Portada generada para el proyecto"></canvas>
+        </div>
+        <div class="meta">
+          <div class="side-tag" id="sideTag">Lado A · Pista 01</div>
+          <h2 id="tTitle">—</h2>
+          <p class="sub" id="tSub">—</p>
+        </div>
+      </div>
+      <dl class="facts" id="facts"></dl>
+      <div class="notes" id="notes"></div>
+      <div class="match" id="match" aria-label="Ficha del partido">
+        <div class="stat"><span class="n" id="sG">—</span><span class="k"><b>Goles</b><span id="kG"></span></span></div>
+        <div class="stat"><span class="n" id="sA">—</span><span class="k"><b>Asistencias</b><span id="kA"></span></span></div>
+        <div class="stat"><span class="n" id="sJ">—</span><span class="k"><b>Jornadas</b><span id="kJ"></span></span></div>
+      </div>
+    </article>
+
+    <div class="list">
+      <div class="filters" id="filters" role="group" aria-label="Filtrar por canal"></div>
+      <div id="list" style="display:grid;gap:22px"></div>
+    </div>
+  </section>
+
+  <section class="board">
+    <div class="score">
+      <h2>Los hits de la temporada</h2>
+      <div class="totals" id="totals"></div>
+      <div class="split">
+        <h4>Pistas por lado</h4>
+        <div class="bar" id="sideBar"><div class="b"></div><div class="a"></div></div>
+        <div class="legend" id="sideLegend"></div>
+      </div>
+      <div class="split">
+        <h4>Dónde suena cada pista</h4>
+        <div class="bar" id="chBar"></div>
+        <div class="legend" id="chLegend"></div>
+      </div>
+    </div>
+    <div class="credits">
+      <h2>Créditos</h2>
+      <dl>
+        <dt>Dirección</dt><dd>David Guerra · UX Research y Design Ops</dd>
+        <dt>Featuring</dt><dd>Producto, Desarrollo, Negocio, Riesgo, Cumplimiento y Operaciones</dd>
+        <dt>Producido en</dt><dd>Productos Innovación</dd>
+      </dl>
+    </div>
+  </section>
+</div>
+
+<div class="player" role="region" aria-label="Controles de presentación">
+  <div class="in">
+    <div class="pl-now"><canvas id="miniCover" width="80" height="80" aria-hidden="true"></canvas><div><b id="plTitle">—</b><small id="plSide">—</small></div></div>
+    <div class="ctrls">
+      <button id="prev" aria-label="Proyecto anterior"><svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
+      <button id="play" class="play" aria-label="Reproducir presentación"><svg viewBox="0 0 24 24" id="playIcon"><path d="M8 5v14l11-7z"/></svg></button>
+      <button id="next" aria-label="Proyecto siguiente"><svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
+    </div>
+    <div class="prog"><span class="time" id="tNow">0:00</span><div class="rail"><div class="fill" id="fill"></div></div><span class="time">0:25</span><span class="keys"><kbd>←</kbd> <kbd>→</kbd> <kbd>espacio</kbd></span></div>
+  </div>
+</div>
+
+<script>
+/*
+  Lado A = UX Research · Lado B = Design Ops.
+  Comunes: title, sub, canal, side, fecha o dur, feat, rol, status (real | borrador | ejemplo), single.
+  Research: preg, porque, metodo[], muestra[], herr, hall[] (máx. 3), cambio, decision (texto o lista), impacto (texto o lista), impactoLabel.
+  Design Ops: prob, impl, adop, impacto.
+  Ficha: g, a, j. Un campo vacío no se muestra. Un texto entre [corchetes] aparece como pendiente.
+*/
+const RES_ROL = "Lideré todo el research, de principio a fin";
+const RES_FEAT = "Product Analyst, Diseñador UX, Product Manager, Technical Owner y developers";
+const TRACKS = [
+  {side:"A", status:"real", rol:RES_ROL, feat:RES_FEAT, title:"Cuentas de menor de edad", sub:"Qué necesitan los padres para abrir y acompañar la cuenta de sus hijos", canal:"App", fecha:"Enero 2026",
+   preg:"¿Qué necesitan los padres para abrir, administrar y supervisar una cuenta de ahorro para sus hijos menores de edad?",
+   porque:"El banco quería que más familias usaran este producto, que crecieran los saldos a la vista y que más clientes se pasaran a lo digital.",
+   metodo:["Entrevistas exploratorias","Encuesta","Journey preliminar","Benchmark de mercado"],
+   muestra:["6 entrevistas a padres colaboradores","Una encuesta a 17.000 clientes que recibió 308 respuestas","42 de esas respuestas sirvieron para clasificar las dudas más comunes"],
+   herr:"Typeform y un benchmark de Nubank",
+   hall:["Los padres quieren controlar y supervisar el dinero de sus hijos.","No tienen claro cómo verían los movimientos del menor desde su propia App.","Tienen dudas sobre requisitos, funciones, transferencias, retiros e intereses."],
+   cambio:"Dejamos de ver el producto solo como abrir una cuenta para menores. Empezamos a pensarlo desde lo que más les importa a los padres: supervisar y tener el control."},
+
+  {side:"A", status:"real", rol:RES_ROL, feat:RES_FEAT, single:true, title:"Gestión y resolución de problemas en el canal digital", sub:"Discovery interno: cómo se resuelven hoy los problemas de los clientes", canal:"Interno", fecha:"Marzo 2026",
+   preg:"¿Cómo nacen, viajan, se gestionan y se resuelven los problemas de los clientes dentro del banco, y qué impide resolverlos de forma ágil, trazable y desde el canal digital?",
+   porque:"Entender las trabas del proceso interno ayudaba a reducir el retrabajo, la información perdida y los contactos repetidos, y a responder mejor a los clientes.",
+   metodo:["Entrevistas con las personas que gestionan los casos","Journey actual (AS IS) en ocho etapas, desde que se detecta el problema hasta que se responde al cliente","Mapa de canales de entrada, responsables, sistemas, derivaciones y tiempos","Análisis de los problemas de fondo"],
+   muestra:["2 personas del Círculo de Servicios","2 desarrolladores y 1 Technical Owner","1 persona de soporte y atención de incidentes"],
+   herr:"Tableros colaborativos, mapa del journey AS IS y registro de procesos internos",
+   hall:["Los casos pasan por correos, chats, tickets y varios equipos, y no hay un solo lugar donde se gestionen.","Nadie acompaña el caso de principio a fin, así que en cada traspaso se pierde información y se repite trabajo.","Resolver depende de procesos manuales y de lo que sabe cada especialista."],
+   cambio:"Cambió la pregunta. El problema no era que faltaran canales para reportar, sino que no había un sistema para gestionar cada caso de principio a fin. Sumar un canal no arregla lo que pasa detrás.",
+   decision:["Centralizar la gestión de casos","Seguir cada caso de principio a fin","Separar y mejorar los flujos según el tipo de problema","A mediano plazo, un centro de casos en la App; a largo plazo, un motor de autogestión"],
+   impacto:"Hicimos visible un problema que se atendía por partes, incidente por incidente. De ahí nació Feedback, un canal de reportes compartido por los squads de todas las tribus de producto."},
+
+  {side:"A", status:"real", rol:RES_ROL, feat:RES_FEAT, title:"Pagos — experiencia: lista frente a chat", sub:"Qué formato ayuda más a gestionar pagos pendientes y cobros", canal:"App", fecha:"Abril 2026",
+   preg:"¿Cómo cambia la forma de entender y gestionar los pagos pendientes y los cobros cuando la experiencia es una lista y cuando es un chat?",
+   porque:"Queríamos saber cuál de las dos propuestas hacía más fácil manejar los pagos y los cobros entre contactos.",
+   metodo:["Pruebas de usabilidad comparativas","Dos tareas: encontrar los pagos pendientes y pedirle dinero a un contacto"],
+   muestra:["6 clientes: 3 probaron la lista y 3 probaron el chat"],
+   herr:"Prototipos en Figma y sesiones por Zoom",
+   hall:["Agrupar los pagos pendientes ayuda a ver rápido qué se debe.","Los usuarios valoran tener el comprobante de cada pago.","Los estados claros y el seguimiento les dicen si todavía hay una deuda pendiente."],
+   cambio:"Dejamos de hablar solo del formato. La pregunta pasó a ser cómo ayudar a las personas a llevar el control de lo que deben y confirmar que ya lo pagaron.",
+   decision:"Presentar Pagos como un chat, porque ese formato encaja con cómo los clientes ya piensan y se comportan.",
+   impactoLabel:"El resultado",
+   impacto:["Los pagos se centralizan y gestionan en un solo lugar","Los recientes, ordenados por fecha","Los contactos en orden alfabético y con opción de editarlos"]},
+
+  {side:"A", status:"real", rol:RES_ROL, feat:RES_FEAT, title:"Rediseño de movimientos de Cuentas", sub:"Cómo los clientes reconocen y validan sus movimientos", canal:"App", fecha:"Mayo 2026",
+   preg:"¿Cómo entienden, identifican y validan los clientes sus movimientos, y qué presentación les ayuda a leerlos rápido y con confianza?",
+   porque:"Es una sección que los clientes revisan todo el tiempo, y no queríamos rediseñarla solo por gustos visuales.",
+   metodo:["Card sorting","Pruebas de usabilidad no moderadas","Entrevistas moderadas","Comparación de prototipos"],
+   muestra:["Primera fase: 8.000 clientes invitados de los segmentos Masivo y Preferente","Segunda fase: 16 entrevistas, 8 por segmento, entre la versión con logos y la versión con íconos"],
+   herr:"Maze, Figma y Dovetail",
+   hall:["Un movimiento se entiende mejor cuando se ve como una sola operación y no como varios registros sueltos.","El monto, el comercio o el destinatario y la fecha son lo que más ayuda a reconocer un movimiento.","Los logos ayudan a reconocer marcas conocidas más rápido, pero el texto sigue siendo necesario para confirmar."],
+   cambio:"Empezamos discutiendo si poner logos o íconos y terminamos en algo más importante: cómo mostrar un movimiento sin que el cliente tenga que armarlo en su cabeza.",
+   decision:"Mostrar el total debitado como dato principal y dejar el detalle de los cargos como información secundaria.",
+   impacto:"Entre el 76% y el 80% prefirió ver los movimientos agrupados en la primera validación."},
+
+  {side:"A", status:"real", rol:RES_ROL, feat:RES_FEAT, title:"Sección Hoy — validación de contenido", sub:"Si los clientes entienden para qué sirve Hoy y cómo explorarla", canal:"App", fecha:"Mayo 2026",
+   preg:"¿Los clientes entienden para qué sirve la sección Hoy y pueden encontrar y explorar sus funciones de forma intuitiva?",
+   porque:"Queríamos comprobar que la nueva experiencia se entendiera y fuera útil antes de cerrar su diseño.",
+   metodo:["Test A/B no moderado","Pruebas de usabilidad","Evaluación de comprensión y exploración"],
+   muestra:["Una muestra de 9.000 clientes de los segmentos Masivo y Preferente","Clientes de iOS que hicieron transacciones en marzo de 2026"],
+   herr:"Maze",
+   hall:["“Añadir widget” funciona, pero rindió menos que un botón con texto en español, y todavía no queda claro qué se puede añadir.","“Para ti” hizo que la gente esperara más personalización.","“Productos” es el nombre que mejor conecta con cómo piensan los usuarios; le sigue “Servicios”."],
+   cambio:"Aprendimos que el nombre de una función no basta para que la gente sepa qué va a pasar cuando la toque."},
+
+  {side:"A", status:"real", rol:RES_ROL, feat:RES_FEAT, title:"Transferencias a nuevos destinatarios", sub:"Qué necesitan los usuarios para confiar al enviar dinero a alguien nuevo", canal:"App", fecha:"Junio 2026",
+   preg:"¿Cómo entienden y completan los usuarios una transferencia a un nuevo destinatario, y qué necesitan para confiar en la operación?",
+   porque:"Transferir pide claridad y confianza, sobre todo cuando se registra a alguien por primera vez.",
+   metodo:["Validación de prototipo","Tareas de usabilidad con transferencias interbancarias","Exploración de cómo entienden el motivo o la descripción de la transferencia"],
+   muestra:["9 participantes"],
+   herr:"Figma y sesiones por Zoom",
+   hall:["Validar la cuenta interbancaria es clave para que confíen.","El motivo de la transferencia les ayuda a entender y ubicar la operación.","La pantalla tiene que dejar claro a quién le están enviando el dinero."]},
+
+  {side:"A", status:"real", rol:RES_ROL, feat:RES_FEAT, title:"Cobrar desde Hoy / Pagos — funcionalidad Círculos", sub:"Si los usuarios encuentran y usan la opción de cobrar a otras personas", canal:"App", fecha:"Junio 2026",
+   preg:"¿Los usuarios encuentran, entienden y pueden usar la función para cobrar a otras personas desde la App?",
+   porque:"Queríamos que cobrar fuera más fácil y que encontrar y completar la acción no costara trabajo.",
+   metodo:["Pruebas de usabilidad","Entrevistas","Exploración de la navegación","Comparación entre usuarios que conocían Círculos y usuarios que no"],
+   muestra:["9 usuarios"],
+   herr:"Prototipo en TestFlight y entrevistas por Zoom",
+   hall:["Los usuarios probaban varias opciones antes de encontrar la función.","Hubo toques en lugares equivocados.","El nombre confundía sobre qué hacía la acción y para qué servía."]},
+
+  {side:"A", status:"real", rol:RES_ROL, feat:RES_FEAT, title:"Resumen del año", sub:"Qué momentos financieros quieren ver celebrados los usuarios", canal:"App", fecha:"Octubre 2026",
+   preg:"¿Qué momentos, logros e historias financieras valoran los usuarios, y qué tan bien los reconoce y celebra el Resumen del Año 2025?",
+   porque:"Queríamos encontrar la distancia entre lo que el producto cuenta y lo que de verdad le importa a la gente, para que la edición 2026 sea más relevante.",
+   metodo:["Discovery: entrevistas sobre logros, momentos importantes, hábitos y qué significa tener un buen año","Validación: prueba del prototipo del Resumen del Año 2025 para ver qué conecta, qué no se entiende y qué falta","Comparación entre lo que contaron los usuarios y lo que mostraba el producto"],
+   muestra:["8 entrevistas","Clientes que vieron el Resumen del Año 2025 completo más de una vez"],
+   herr:"Zoom, Figma, correo electrónico y SharePoint",
+   hall:["Tener un buen año no es solo tener o ganar más dinero: pagar una deuda, cumplir una meta o ahorrar también cuentan como logros.","Los hábitos y las decisiones pesan más que los montos. Un total sin contexto puede contar una historia que no es la del usuario.","El resumen genera identificación solo si muestra historias que la persona reconoce como suyas. También aparecieron ganas de más personalización y dudas sobre la privacidad y la comparación con otros."],
+   cambio:"Cuestionamos una idea de fondo del producto: un buen año no es solo el año en que gastaste menos o ganaste más. También puede ser el año en que pagaste una deuda, cumpliste una meta o tomaste mejores decisiones.",
+   decision:["Ajustar el contenido y las insignias de la edición 2026","Mostrar logros personales, no solo cifras","Dar más contexto a los hábitos y patrones","Evitar que los totales o las categorías distorsionen la realidad","Cuidar la privacidad y los datos sensibles"]},
+
+  {side:"B", status:"real", title:"Comunidad Beta", sub:"Investigación continua con clientes", canal:"App",
+   area:"Research Ops", estado:"Lanzada", fecha:"Julio 2026",
+   feat:"Product Manager y Product Analyst del squad de Autogestión",
+   rol:"Creé y lideré la comunidad de principio a fin",
+   prob:"Conseguir clientes para las investigaciones dependía de convocatorias puntuales, estudio por estudio. Hacía falta una relación más cercana con los usuarios para que participar fuera algo recurrente.",
+   deteccion:"Vi la oportunidad de construir una relación continua con clientes que tienen ganas de compartir sus opiniones y experiencias para mejorar los productos digitales.",
+   impl:"Creé y lancé una comunidad Beta de clientes que participan en investigaciones, entrevistas y validaciones de funcionalidades antes de que salgan a producción.",
+   adop:"51 clientes forman parte de la comunidad",
+   impacto:["Recibimos feedback de varias funcionalidades antes de su salida a producción","Los clientes se abren más a participar en entrevistas y conversaciones a profundidad","Hay un interés genuino de los usuarios por involucrarse en la investigación de experiencia","Ahora contamos con una base de participantes lista para las próximas investigaciones"]},
+  {side:"B", status:"real", title:"La voz del cliente, en tiempo real", sub:"Feedback: un canal para que lo que dicen los clientes llegue en tiempo real a todos los equipos de producto", canal:"App",
+   fecha:"Septiembre 2026", dur:"Las mejoras salieron en un sprint de 2 semanas y siguen en iteración",
+   feat:"Developers y Martech",
+   rol:"Lideré el diseño del mensaje, reuní a developers y Martech para sacar adelante la iniciativa, armé el esquema de miembros de cada equipo para la gobernanza y lo comuniqué a todo el equipo",
+   origen:"Nació de la investigación de Gestión y resolución de problemas en el canal digital (pista 02).",
+   prob:"Las dudas y los problemas de los clientes llegaban por correos, chats y tickets sueltos. No había un solo lugar para verlos ni alguien que los siguiera de principio a fin.",
+   impl:["Un repositorio donde el feedback llega en tiempo real y queda guardado para que cualquier persona del equipo lo pueda revisar","Un nuevo diseño del mensaje que reciben los equipos por correo, junto con la migración del webhook","Gobernanza por equipo: cada equipo registra a sus miembros en los módulos de feedback que le interesan","Un canal en Microsoft Teams que avisa cuando llega un mensaje del cliente, con la captura de pantalla de su duda o problema"],
+   adop:"Más de 350 personas de los squads de todas las tribus de producto",
+   impacto:["Unos 80 mensajes de clientes al día. No todos son problemas: también llegan comentarios sobre la experiencia y comentarios positivos","Casos resueltos más rápido: unos 40 al día","Los equipos ven con más claridad qué problemas existen"]},
+  {side:"B", status:"real", title:"Línea directa", sub:"Automatización del reclutamiento de participantes para investigación", canal:"Interno",
+   area:"Research Ops", estado:"En desarrollo", fecha:"Octubre 2026", feat:"Martech: apoyo con Braze y capacitación base en Power Automate",
+   rol:"Propuse y diseñé la solución de automatización, y armo personalmente los flujos en Power Automate",
+   frase:"Que conseguir participantes deje de ser un trabajo manual y se vuelva un proceso conectado, para que el equipo pase más tiempo investigando y menos coordinando.",
+   prob:"Conseguir participantes para entrevistas, pruebas de prototipos y encuestas era un cuello de botella para Research. Todo dependía de contactar y coordinar a mano, y eso frenaba las investigaciones.",
+   deteccion:"Vi que reclutar y coordinar participantes era una fricción que se repetía en cada estudio. Al analizar el proceso pude medir cuánto esfuerzo nos costaba.",
+   impl:["Power Automate como orquestador de todo el flujo","Braze para contactar a los clientes","Microsoft Forms para recoger sus respuestas","Outlook para la comunicación y la coordinación","Zoom para agendar y gestionar las sesiones"],
+   adop:"Todavía está en diseño, así que aún no hay cifras de adopción.",
+   base:["El reclutamiento toma de 4 a 5 días en total","De esos, 3 a 4 días son trabajo operativo del investigador","Solo responde el 3,56% de los clientes invitados: 17 de 478","De los que responden, participa el 58,8%: unos 10 de 17","Pasan 24 horas desde que alguien acepta hasta que su sesión queda confirmada"],
+   objetivos:["Reducir el trabajo operativo del reclutamiento","Contactar y coordinar más rápido a los participantes","Hacer más fácil correr entrevistas, pruebas y encuestas","Liberar tiempo del equipo para analizar y aprender"],
+   medir:"Lo principal será que el investigador dedique menos tiempo a lo operativo, sin bajar la calidad ni el perfil de los participantes. También mediremos la duración total del proceso y la tasa de participación, siempre contra esta línea base."},
+
+];
+const SLIDE_MS = 25000;
+const ALBUM = "The art of creating better products";
+let intro = true;
+const SIDES = {A:["Lado A","UX Research"], B:["Lado B","Design Ops"]};
+const STAT = {
+  A:["hallazgos que llegaron a producto","equipos que usaron los hallazgos","sesiones con usuarios"],
+  B:["entregables o herramientas lanzadas","equipos que adoptaron el proceso","semanas de implementación"],
+  O:["","",""]
+};
+const $ = id => document.getElementById(id);
+const pad = n => String(n).padStart(2,"0");
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const txt = s => esc(s).replace(/\[([^\]]+)\]/g,'<span class="todo">[$1]</span>');
+const has = v => v!=null && v!=="" && !(Array.isArray(v)&&!v.length);
+const when = t => t.fecha || t.dur || "";
+const chips = t => `<span class="chip ${t.status==="ejemplo"?"":t.status}">${t.status}</span>${t.single?'<span class="chip single">sencillo</span>':''}`;
+
+function rng(seed){let s=seed*9301+49297;return()=>{s=(s*9301+49297)%233280;return s/233280}}
+function drawCover(cv,i){
+  const t=TRACKS[i],c=cv.getContext("2d"),W=cv.width,H=cv.height,r=rng(i*17+3);
+  const pal=t.side==="A"?["#173F33","#3DB27A","#F2C14E","#F3F0E8"]:t.side==="B"?["#1D3A6B","#F2C14E","#E86A50","#F3F0E8"]:["#3A2A12","#F2C14E","#E86A50","#F3F0E8"];
+  c.globalAlpha=1;c.fillStyle=pal[0];c.fillRect(0,0,W,H);
+  c.globalAlpha=.10;c.fillStyle="#ffffff";for(let k=0;k<8;k+=2)c.fillRect(k*W/8,0,W/8,H);
+  c.globalAlpha=.35;c.strokeStyle=pal[3];c.lineWidth=W*.008;
+  c.beginPath();c.arc(W/2,H/2,W*(.16+r()*.08),0,Math.PI*2);c.stroke();
+  c.beginPath();c.moveTo(W/2,0);c.lineTo(W/2,H);c.stroke();
+  c.globalAlpha=1;c.fillStyle=pal[1];
+  const bars=28,bw=W/bars;
+  for(let k=0;k<bars;k++){const h=H*(.05+Math.abs(Math.sin(k*.5+i))*.22*r()+.04*r());c.fillRect(k*bw+bw*.2,H*.78-h,bw*.6,h)}
+  c.strokeStyle=pal[2];c.lineCap="round";c.lineWidth=W*(.05+r()*.03);
+  c.beginPath();let x=W*.1,y=H*(.2+r()*.2);c.moveTo(x,y);
+  for(let k=0;k<3;k++){c.bezierCurveTo(x+W*.15,y-H*.2*r(),x+W*.25,y+H*.25*r(),x+W*.3,y+H*(r()-.5)*.2);x+=W*.3;y+=H*(r()-.5)*.15}
+  c.stroke();
+  c.fillStyle=pal[3];c.font=`800 ${W*.11}px Unbounded, Arial Black, sans-serif`;c.textBaseline="top";
+  c.fillText(pad(i+1),W*.06,H*.84);
+}
+
+const CANALES=[...new Set(TRACKS.map(t=>t.canal))];
+let filter="Todos";
+function buildFilters(){
+  const counts={Todos:TRACKS.length};TRACKS.forEach(t=>counts[t.canal]=(counts[t.canal]||0)+1);
+  $("filters").innerHTML=["Todos",...CANALES].map(f=>`<button data-f="${f}" aria-pressed="${f===filter}">${f} · ${counts[f]}</button>`).join("");
+  $("filters").querySelectorAll("button").forEach(b=>b.onclick=()=>{filter=b.dataset.f;buildFilters();applyFilter();
+    const v=visible();if(!intro&&v.length&&!v.includes(cur))select(v[0]);});
+}
+const visible=()=>TRACKS.map((t,i)=>i).filter(i=>filter==="Todos"||TRACKS[i].canal===filter);
+function applyFilter(){
+  const v=visible();
+  document.querySelectorAll("ol.tracks li").forEach(li=>li.hidden=!v.includes(+li.dataset.i));
+  document.querySelectorAll(".side").forEach(s=>s.hidden=!s.querySelector("li:not([hidden])"));
+}
+function buildList(){
+  Object.entries(SIDES).forEach(([s,[name,sub]])=>{
+    const sec=document.createElement("div");sec.className="side";
+    sec.innerHTML=`<h3>${name} <span>${sub}</span></h3>`;
+    const ol=document.createElement("ol");ol.className="tracks";
+    TRACKS.forEach((t,i)=>{if(t.side!==s)return;
+      const li=document.createElement("li");li.dataset.i=i;
+      li.innerHTML=`<button class="track" data-i="${i}" aria-current="false">
+        <span class="no"><span class="no-n">${pad(i+1)}</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></span>
+        <canvas width="96" height="96" aria-hidden="true"></canvas>
+        <span class="t"><b>${esc(t.title)}</b><small>${esc(t.sub)}</small></span>
+        <span class="d">${esc(t.canal)}<br>${esc(when(t).replace(/^\[.*\]$/,"—").replace(/ 2026$/,""))}</span></button>`;
+      ol.appendChild(li);drawCover(li.querySelector("canvas"),i);
+      li.querySelector("button").addEventListener("click",()=>{select(i);if(playing)t0=performance.now()});
+    });
+    sec.appendChild(ol);$("list").appendChild(sec);
+  });
+}
+
+let cur=0,playing=false,t0=0,elapsed=0,raf=0;
+const para = v => `<p>${txt(v)}</p>`;
+const list = (v,tag="ul") => Array.isArray(v)?`<${tag}>${v.map(x=>`<li>${txt(x)}</li>`).join("")}</${tag}>`:para(v);
+function note(h,v,body,cls=""){return has(v)?`<div class="note ${cls}"><h3>${h}</h3>${body(v)}</div>`:""}
+function drawAlbum(cv){
+  const c=cv.getContext("2d"),W=cv.width,H=cv.height;
+  c.globalAlpha=1;c.fillStyle="#173F33";c.fillRect(0,0,W/2,H);c.fillStyle="#1D3A6B";c.fillRect(W/2,0,W/2,H);
+  c.globalAlpha=.10;c.fillStyle="#ffffff";for(let k=0;k<8;k+=2)c.fillRect(k*W/8,0,W/8,H);
+  c.globalAlpha=.35;c.strokeStyle="#F3F0E8";c.lineWidth=W*.008;
+  c.beginPath();c.arc(W/2,H*.42,W*.2,0,Math.PI*2);c.stroke();
+  c.beginPath();c.moveTo(W/2,0);c.lineTo(W/2,H);c.stroke();
+  c.globalAlpha=1;c.strokeStyle="#E86A50";c.lineCap="round";c.lineWidth=W*.06;
+  c.beginPath();c.moveTo(W*.08,H*.62);c.bezierCurveTo(W*.35,H*.42,W*.6,H*.8,W*.92,H*.58);c.stroke();
+  c.fillStyle="#F2C14E";const bars=28,bw=W/bars;
+  for(let k=0;k<bars;k++){const h=H*(.04+Math.abs(Math.sin(k*.55))*.12);c.fillRect(k*bw+bw*.2,H*.9-h,bw*.6,h)}
+  c.fillStyle="#F3F0E8";c.textBaseline="top";
+  c.font=`800 ${W*.085}px Unbounded, Arial Black, sans-serif`;
+  ["The art of","creating better","products"].forEach((l,k)=>c.fillText(l,W*.06,H*.06+k*W*.1));
+}
+function showIntro(){
+  intro=true;cur=0;elapsed=0;
+  $("sideTag").hidden=true;
+  $("tTitle").textContent=ALBUM;
+  $("tSub").textContent=`David · Temporada 2026 · ${TRACKS.length} pistas`;
+  $("facts").hidden=true;$("notes").hidden=true;$("match").hidden=true;
+  $("vLabel").textContent="A";
+  drawAlbum($("bigCover"));drawAlbum($("miniCover"));
+  $("plTitle").textContent=ALBUM;$("plSide").textContent="Dale play para empezar";
+  document.querySelectorAll(".track").forEach(b=>b.setAttribute("aria-current","false"));
+  paintProg();
+}
+function select(i){
+  intro=false;$("facts").hidden=false;$("notes").hidden=false;$("sideTag").hidden=false;
+  cur=(i+TRACKS.length)%TRACKS.length;elapsed=0;t0=performance.now();
+  const t=TRACKS[cur],n=pad(cur+1);
+  const sideIdx=TRACKS.filter((x,k)=>x.side===t.side&&k<=cur).length;
+  $("sideTag").textContent=t.outro?"Outro · Próxima temporada":`${SIDES[t.side][0]} · ${SIDES[t.side][1]} · Pista ${pad(sideIdx)}`;
+  $("tTitle").textContent=t.title;
+  $("tSub").textContent=t.sub;
+  $("facts").innerHTML=[["Área",t.area],["Estado",t.estado],["Canal",t.canal],["Fecha",t.fecha],["Duración",t.dur],["Featuring",t.feat],["Mi rol",t.rol]]
+    .filter(([,v])=>has(v)).map(([k,v])=>`<div><dt>${k}</dt><dd>${txt(v)}</dd></div>`).join("");
+  let h="";
+  if(t.outro){
+    h=note("Hacia dónde vamos",t.prob,para)+note("Lo priorizado",t.impl,para)+note("Lo que espero lograr",t.impacto,para,"full");
+  }else if(t.side==="A"){
+    h=note("La pregunta",t.preg,para,"full")
+     +note("Por qué importaba",t.porque,para,"full")
+     +note("Cómo lo investigamos",t.metodo,list)
+     +note("Con quiénes",t.muestra,list)
+     +note("Lo que descubrimos",t.hall,v=>list(v.slice(0,3),"ol"),"full")
+     +note("Qué cambió",t.cambio,para,"full")
+     +note("La decisión",t.decision,list)
+     +note(t.impactoLabel||"El impacto",t.impacto,list)
+     +note("Herramientas",t.herr,para,"full");
+  }else{
+    h=(has(t.frase)?`<blockquote class="chorus note full"><small>En una frase</small>${txt(t.frase)}</blockquote>`:"")
+     +note("De dónde nació",t.origen,para,"full")
+     +note("El problema del equipo",t.prob,para,"full")
+     +note("Cómo lo detecté",t.deteccion,para,"full")
+     +note("Lo que implementé",t.impl,list,"full")
+     +note("Adopción",t.adop,list)
+     +note("Impacto",t.impacto,list)
+     +note("Línea base de hoy",t.base,list)
+     +note("Lo que busca",t.objetivos,list)
+     +note("Cómo lo vamos a medir",t.medir,para,"full");
+  }
+  $("notes").innerHTML=h;
+  const L=STAT[t.side],anyStat=[t.g,t.a,t.j].some(x=>x!=null);
+  $("match").hidden=!anyStat;
+  [["sG","kG","g",0],["sA","kA","a",1],["sJ","kJ","j",2]].forEach(([s,k,f,x])=>{$(s).textContent=t[f]==null?"—":t[f];$(k).textContent=L[x]});
+  $("vLabel").textContent=n;
+  drawCover($("bigCover"),cur);drawCover($("miniCover"),cur);
+  $("plTitle").textContent=t.title;$("plSide").textContent=`${SIDES[t.side][0]} · ${n} de ${pad(TRACKS.length)}`;
+  document.querySelectorAll(".track").forEach(b=>b.setAttribute("aria-current",+b.dataset.i===cur?"true":"false"));
+  paintProg();
+}
+function step(d){const v=visible();if(!v.length)return;if(intro){select(v[0]);if(playing)t0=performance.now();return}const p=v.indexOf(cur);select(v[(p+d+v.length)%v.length]);if(playing)t0=performance.now()}
+function paintProg(){const p=Math.min(1,elapsed/SLIDE_MS);$("fill").style.width=(p*100)+"%";$("tNow").textContent=`0:${pad(Math.floor(elapsed/1000))}`}
+function loop(now){
+  if(!playing)return;elapsed=now-t0;paintProg();
+  if(elapsed>=SLIDE_MS){const v=visible();if(v.indexOf(cur)===v.length-1){setPlaying(false);return}step(1)}
+  raf=requestAnimationFrame(loop);
+}
+function setPlaying(v){
+  if(v&&intro){const vis=visible();select(vis.length?vis[0]:0)}
+  playing=v;document.body.classList.toggle("playing",v);
+  $("play").setAttribute("aria-label",v?"Pausar presentación":"Reproducir presentación");
+  $("playIcon").innerHTML=v?'<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>':'<path d="M8 5v14l11-7z"/>';
+  cancelAnimationFrame(raf);if(v){t0=performance.now()-elapsed;raf=requestAnimationFrame(loop)}
+}
+$("play").addEventListener("click",()=>setPlaying(!playing));
+$("next").addEventListener("click",()=>step(1));
+$("prev").addEventListener("click",()=>step(-1));
+document.addEventListener("keydown",e=>{
+  if(e.target.closest("input,textarea"))return;
+  if(e.key==="ArrowRight"){e.preventDefault();step(1)}
+  else if(e.key==="ArrowLeft"){e.preventDefault();step(-1)}
+  else if(e.key===" "&&!e.target.closest("button")){e.preventDefault();setPlaying(!playing)}
+});
+
+function buildTotals(){
+  const songs=TRACKS.filter(t=>!t.outro),A=songs.filter(t=>t.side==="A"),B=songs.filter(t=>t.side==="B");
+  const months=new Set(A.map(t=>t.fecha).filter(Boolean)).size;
+  $("totals").innerHTML=[[songs.length,"pistas · proyectos"],[A.length,"investigaciones"],[B.length,"proyectos de Design Ops"],[months,"meses con investigación"]]
+    .map(([n,k])=>`<div class="total"><span class="n">${n}</span><span class="k">${k}</span></div>`).join("");
+  const pa=Math.round(A.length/songs.length*100);
+  $("sideBar").querySelector(".b").style.cssText=`width:${pa}%;background:var(--pitch)`;
+  $("sideBar").querySelector(".a").style.cssText=`width:${100-pa}%;background:var(--label)`;
+  $("sideLegend").innerHTML=`<span><i style="background:var(--pitch)"></i>Lado A · UX Research · ${A.length}</span><span><i style="background:var(--label)"></i>Lado B · Design Ops · ${B.length}</span>`;
+  const colors=["var(--label)","var(--pitch)","var(--brush)","var(--muted)"];
+  const cs=[...new Set(songs.map(t=>t.canal))].map((k,i)=>[k,songs.filter(t=>t.canal===k).length,colors[i%colors.length]]);
+  $("chBar").innerHTML=cs.map(([k,n,c])=>`<div style="width:${n/songs.length*100}%;background:${c}"></div>`).join("");
+  $("chLegend").innerHTML=cs.map(([k,n,c])=>`<span><i style="background:${c}"></i>${k} · ${n}</span>`).join("");
+}
+
+buildFilters();buildList();applyFilter();buildTotals();showIntro();
+document.fonts&&document.fonts.ready.then(()=>{intro?showIntro():select(cur);document.querySelectorAll(".track canvas").forEach(c=>drawCover(c,+c.closest(".track").dataset.i))});
+</script>
+</body></html>
