@@ -138,6 +138,7 @@ li[hidden]{display:none}
 .ctrls button:hover{background:var(--surface-2)}
 .ctrls .play{background:var(--label);color:var(--ink-on-label);width:48px;height:48px}
 .ctrls svg{width:20px;height:20px;fill:currentColor}
+.ctrls #voice{color:var(--muted)}.ctrls #voice[aria-pressed="true"]{color:var(--label)}.ctrls button[hidden]{display:none}
 .ctrls .play:hover{background:var(--label);filter:brightness(1.08)}
 .side,.track{color:var(--fg)}
 .prog{display:flex;align-items:center;gap:10px;justify-content:flex-end;min-width:0}
@@ -222,8 +223,9 @@ li[hidden]{display:none}
       <button id="prev" aria-label="Proyecto anterior"><svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
       <button id="play" class="play" aria-label="Reproducir presentación"><svg viewBox="0 0 24 24" id="playIcon"><path d="M8 5v14l11-7z"/></svg></button>
       <button id="next" aria-label="Proyecto siguiente"><svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
+      <button id="voice" aria-label="Silenciar la voz" aria-pressed="true" title="Voz"><svg viewBox="0 0 24 24" id="voiceIcon"><path d="M4 9h4l5-4v14l-5-4H4zM16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
-    <div class="prog"><span class="time" id="tNow">0:00</span><div class="rail"><div class="fill" id="fill"></div></div><span class="time">0:25</span><span class="keys"><kbd>←</kbd> <kbd>→</kbd> <kbd>espacio</kbd></span></div>
+    <div class="prog"><span class="time" id="tNow">0:00</span><div class="rail"><div class="fill" id="fill"></div></div><span class="time" id="tLen">0:25</span><span class="keys"><kbd>←</kbd> <kbd>→</kbd> <kbd>espacio</kbd></span></div>
   </div>
 </div>
 
@@ -347,6 +349,20 @@ const TRACKS = [
    medir:"Lo principal será que el investigador dedique menos tiempo a lo operativo, sin bajar la calidad ni el perfil de los participantes. También mediremos la duración total del proceso y la tasa de participación, siempre contra esta línea base."},
 
 ];
+const VOZ = {
+  "Cuentas de menor de edad":"Lado A, pista uno: Cuentas de menor de edad. En enero quisimos entender qué necesitan los padres para abrir y acompañar la cuenta de ahorro de sus hijos. Hablamos con seis padres y encuestamos a miles de clientes. Descubrimos que lo que más buscan es supervisar y tener el control. Así dejamos de ver el producto como una simple apertura de cuenta y empezamos a pensarlo desde lo que los padres necesitan.",
+  "Gestión y resolución de problemas en el canal digital":"Pista dos: Gestión y resolución de problemas en el canal digital. En marzo miramos hacia adentro, para entender cómo viaja un problema del cliente dentro del banco. Conversamos con quienes gestionan los casos y reconstruimos todo el recorrido. Descubrimos que el problema no era la falta de canales, sino la falta de un sistema para seguir cada caso de principio a fin. De ahí nació Feedback, un canal que hoy comparten todas las tribus de producto.",
+  "Pagos — experiencia: lista frente a chat":"Pista tres: Pagos, lista frente a chat. En abril pusimos a prueba dos formas de manejar los pagos pendientes y los cobros entre contactos. Seis clientes probaron una lista o un chat. Aprendimos que la gente quiere ver qué debe, tener sus comprobantes y saber si ya pagó. Elegimos el chat, porque encaja con cómo los clientes ya piensan, y ahora los pagos se gestionan en un solo lugar.",
+  "Rediseño de movimientos de Cuentas":"Pista cuatro: Rediseño de movimientos de Cuentas. En mayo investigamos cómo los clientes reconocen sus movimientos. Empezamos discutiendo si poner logos o íconos, y terminamos en algo más importante: mostrar cada movimiento como una sola operación, con el total primero y el detalle después. Entre el setenta y seis y el ochenta por ciento prefirió ver sus movimientos agrupados.",
+  "Sección Hoy — validación de contenido":"Pista cinco: Sección Hoy, validación de contenido. También en mayo, con una muestra de nueve mil clientes, comprobamos si se entendía para qué sirve la nueva sección Hoy. Aprendimos que palabras como Para ti o Productos cambian lo que la gente espera encontrar, y que el nombre de una función no basta para saber qué va a pasar cuando la tocas.",
+  "Transferencias a nuevos destinatarios":"Pista seis: Transferencias a nuevos destinatarios. En junio, con nueve participantes, exploramos qué hace falta para confiar al enviar dinero a alguien nuevo. Tres cosas marcaron la diferencia: validar la cuenta de destino, entender el motivo de la transferencia y tener claro a quién le estás enviando el dinero.",
+  "Cobrar desde Hoy / Pagos — funcionalidad Círculos":"Pista siete: Cobrar desde Hoy y Pagos, la funcionalidad Círculos. Con nueve usuarios probamos si encontraban la opción para cobrar a otras personas. Vimos que exploraban varias opciones antes de dar con ella, que tocaban en lugares equivocados y que el nombre confundía. La lección fue clara: si el nombre no se entiende, la acción no se encuentra.",
+  "Resumen del año":"Pista ocho: Resumen del año. En octubre conversamos con ocho clientes sobre qué significa para ellos un buen año financiero. La respuesta nos cambió la mirada: no es solo ganar más o gastar menos. También es pagar una deuda, cumplir una meta o tomar mejores decisiones. Con eso ajustamos el contenido y las insignias de la edición dos mil veintiséis.",
+  "Comunidad Beta":"Lado B, pista uno: Comunidad Beta. En julio creé una comunidad de clientes que prueban nuevas funcionalidades antes de que salgan a producción. Hoy son cincuenta y un clientes con ganas de participar, y eso nos da una base lista para investigar de forma continua, sin empezar de cero en cada estudio.",
+  "La voz del cliente, en tiempo real":"Pista dos: La voz del cliente, en tiempo real. En septiembre ayudé a poner en marcha Feedback: un repositorio y avisos por correo y por Teams, para que lo que dicen los clientes llegue al instante a más de trescientas cincuenta personas. Hoy llegan unos ochenta mensajes al día y se resuelven alrededor de cuarenta casos diarios.",
+  "Línea directa":"Pista tres: Línea directa. Conseguir participantes para una investigación nos tomaba de cuatro a cinco días de trabajo manual. Por eso, desde octubre, diseño una automatización que conecta Braze, Forms, Outlook y Zoom con Power Automate. El objetivo es simple: que el equipo pase más tiempo investigando y menos tiempo coordinando."
+};
+TRACKS.forEach(t=>t.voz=VOZ[t.title]);
 const SLIDE_MS = 25000;
 const ALBUM = "The art of creating better products";
 let intro = true;
@@ -411,13 +427,49 @@ function buildList(){
         <span class="t"><b>${esc(t.title)}</b><small>${esc(t.sub)}</small></span>
         <span class="d">${esc(t.canal)}<br>${esc(when(t).replace(/^\[.*\]$/,"—").replace(/ 2026$/,""))}</span></button>`;
       ol.appendChild(li);drawCover(li.querySelector("canvas"),i);
-      li.querySelector("button").addEventListener("click",()=>{select(i);if(playing)t0=performance.now()});
+      li.querySelector("button").addEventListener("click",()=>{select(i);if(playing)startAudio()});
     });
     sec.appendChild(ol);$("list").appendChild(sec);
   });
 }
 
 let cur=0,playing=false,t0=0,elapsed=0,raf=0;
+const TTS = typeof window!=="undefined" && "speechSynthesis" in window && typeof SpeechSynthesisUtterance!=="undefined";
+let voiceOn = TTS, esVoice = null, speakTok = 0, curDur = SLIDE_MS, trackFail = false, speakStart = 0;
+const ICON_ON = '<path d="M4 9h4l5-4v14l-5-4H4zM16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+const ICON_OFF = '<path d="M4 9h4l5-4v14l-5-4H4zM17 9l5 6M22 9l-5 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+function pickVoice(){
+  if(!TTS)return;
+  const pref=["es-EC","es-419","es-MX","es-US","es-CO","es-PE","es-AR","es-ES"];
+  const vs=speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang));
+  const score=v=>{let i=pref.indexOf(v.lang.replace("_","-"));i=i<0?pref.length:i;return i*10-(/google|natural|neural|online|paulina|m[oó]nica|sabina|dalia|elena|helena/i.test(v.name)?5:0)};
+  esVoice=vs.sort((a,b)=>score(a)-score(b))[0]||null;
+}
+if(TTS){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
+const voiceActive = () => TTS && voiceOn && !trackFail;
+function stopVoice(){ if(TTS){speakTok++;speechSynthesis.cancel()} }
+function speakTrack(i){
+  stopVoice();
+  const tok=++speakTok, text=TRACKS[i].voz||TRACKS[i].title;
+  trackFail=false;speakStart=performance.now();
+  const parts=text.match(/[^.!?:]+[.!?:]*/g)||[text];
+  curDur=Math.max(8000,text.split(/\s+/).length/2.5*1000);
+  parts.forEach((p,k)=>{
+    const u=new SpeechSynthesisUtterance(p.trim());
+    u.lang=esVoice?esVoice.lang:"es-ES"; if(esVoice)u.voice=esVoice; u.rate=1;
+    const fail=()=>{if(tok===speakTok)trackFail=true};
+    u.onerror=fail;
+    if(k===parts.length-1)u.onend=()=>{if(tok!==speakTok||!playing)return;if(performance.now()-speakStart<curDur*.3){trackFail=true;return}afterTrack()};
+    speechSynthesis.speak(u);
+  });
+}
+function afterTrack(){const v=visible();if(v.indexOf(cur)===v.length-1){setPlaying(false);return}step(1)}
+function startAudio(){
+  elapsed=0;t0=performance.now();trackFail=false;
+  if(voiceActive())speakTrack(cur); else {stopVoice();curDur=SLIDE_MS}
+  const sec=Math.round(curDur/1000);$("tLen").textContent=`${Math.floor(sec/60)}:${pad(sec%60)}`;
+}
+
 const para = v => `<p>${txt(v)}</p>`;
 const list = (v,tag="ul") => Array.isArray(v)?`<${tag}>${v.map(x=>`<li>${txt(x)}</li>`).join("")}</${tag}>`:para(v);
 function note(h,v,body,cls=""){return has(v)?`<div class="note ${cls}"><h3>${h}</h3>${body(v)}</div>`:""}
@@ -493,11 +545,11 @@ function select(i){
   document.querySelectorAll(".track").forEach(b=>b.setAttribute("aria-current",+b.dataset.i===cur?"true":"false"));
   paintProg();
 }
-function step(d){const v=visible();if(!v.length)return;if(intro){select(v[0]);if(playing)t0=performance.now();return}const p=v.indexOf(cur);select(v[(p+d+v.length)%v.length]);if(playing)t0=performance.now()}
-function paintProg(){const p=Math.min(1,elapsed/SLIDE_MS);$("fill").style.width=(p*100)+"%";$("tNow").textContent=`0:${pad(Math.floor(elapsed/1000))}`}
+function step(d){const v=visible();if(!v.length)return;if(intro){select(v[0]);if(playing)startAudio();return}const p=v.indexOf(cur);select(v[(p+d+v.length)%v.length]);if(playing)startAudio()}
+function paintProg(){const d=playing?curDur:SLIDE_MS,p=Math.min(voiceActive()?.98:1,elapsed/d);$("fill").style.width=(p*100)+"%";const sec=Math.floor(elapsed/1000);$("tNow").textContent=`${Math.floor(sec/60)}:${pad(sec%60)}`}
 function loop(now){
   if(!playing)return;elapsed=now-t0;paintProg();
-  if(elapsed>=SLIDE_MS){const v=visible();if(v.indexOf(cur)===v.length-1){setPlaying(false);return}step(1)}
+  if(!voiceActive()&&elapsed>=curDur){afterTrack();if(!playing)return}
   raf=requestAnimationFrame(loop);
 }
 function setPlaying(v){
@@ -505,9 +557,12 @@ function setPlaying(v){
   playing=v;document.body.classList.toggle("playing",v);
   $("play").setAttribute("aria-label",v?"Pausar presentación":"Reproducir presentación");
   $("playIcon").innerHTML=v?'<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>':'<path d="M8 5v14l11-7z"/>';
-  cancelAnimationFrame(raf);if(v){t0=performance.now()-elapsed;raf=requestAnimationFrame(loop)}
+  cancelAnimationFrame(raf);
+  if(v){startAudio();raf=requestAnimationFrame(loop)} else stopVoice();
 }
 $("play").addEventListener("click",()=>setPlaying(!playing));
+if(!TTS)$("voice").hidden=true;
+$("voice").addEventListener("click",()=>{voiceOn=!voiceOn;$("voice").setAttribute("aria-pressed",voiceOn);$("voice").setAttribute("aria-label",voiceOn?"Silenciar la voz":"Activar la voz");$("voiceIcon").innerHTML=voiceOn?ICON_ON:ICON_OFF;if(playing)startAudio()});
 $("next").addEventListener("click",()=>step(1));
 $("prev").addEventListener("click",()=>step(-1));
 document.addEventListener("keydown",e=>{
